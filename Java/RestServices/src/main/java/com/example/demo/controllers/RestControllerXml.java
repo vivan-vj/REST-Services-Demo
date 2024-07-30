@@ -21,8 +21,10 @@ import com.example.demo.model.ResponseObj;
 import com.example.demo.util.RestUtil;
 
 /**
- * @author JadhVi01
+ * The Class RestControllerXml.
+ * has Rest service methods that consumes/produces XML Data.
  *
+ * @author Vivek Jadhav
  */
 @RestController
 @RequestMapping("testJava/rs/xml/")
@@ -43,12 +45,12 @@ public class RestControllerXml {
 			httpStatus = HttpStatus.OK;
 			responseObj.setStatus(RestUtil.SUCCESS);
 			responseObj.setMessage("DATA : OBJ ");
-			return new ResponseEntity<>(responseObj, httpStatus);
+			return ResponseEntity.ok(responseObj);
 		} else {
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			responseObj.setStatus(RestUtil.FAILURE);
 			responseObj.setMessage("Error Occurred ");
-			return new ResponseEntity<>(responseObj, httpStatus);
+			return ResponseEntity.internalServerError().body(responseObj);
 		}
 	}
 
@@ -79,14 +81,15 @@ public class RestControllerXml {
 	/**
 	 * Patch.
 	 *
+	 * @param id the id
 	 * @param request the request
 	 * @return the response entity
 	 */
-	@PatchMapping(value = "patch/",  consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<ResponseObj> patch(@RequestBody RequestObj request) {
+	@PatchMapping(value = "patch/{id}",  consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<ResponseObj> patch(@PathVariable("id") Long id, @RequestBody RequestObj request) {
 		ResponseObj responseObj = new ResponseObj();
 		HttpStatus httpStatus;
-		if(null != request.getId() || null != request.getName()) {
+		if(null != id || null != request.getName()) {
 			//TODO SERVICE CALL
 			httpStatus = HttpStatus.OK;
 			responseObj.setStatus(RestUtil.SUCCESS);
@@ -103,14 +106,15 @@ public class RestControllerXml {
 	/**
 	 * Put.
 	 *
+	 * @param id the id
 	 * @param request the request
 	 * @return the response entity
 	 */
-	@PutMapping(value = "put/", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<ResponseObj> put(@RequestBody RequestObj request) {
+	@PutMapping(value = "put/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<ResponseObj> put(@PathVariable("id") Long id, @RequestBody RequestObj request) {
 		ResponseObj responseObj = new ResponseObj();
 		HttpStatus httpStatus;
-		if(null != request.getId() && null != request.getName() && null != request.getDepartment()) {
+		if(null != id && null != request.getName() && null != request.getDepartment()) {
 			//SERVICE CALL
 			httpStatus = HttpStatus.OK;
 			responseObj.setStatus(RestUtil.SUCCESS);

@@ -20,9 +20,10 @@ import com.example.demo.model.RequestObj;
 import com.example.demo.model.ResponseObj;
 import com.example.demo.util.RestUtil;
 
+
 /**
  * The Class RestControllerJson.
- * has Rest service methods that produces JSON Data Output
+ * has Rest service methods that consumes/produces JSON Data.
  *
  * @author Vivek Jadhav
  */
@@ -81,14 +82,15 @@ public class RestControllerJson {
 	/**
 	 * Patch.
 	 *
+	 * @param id the id
 	 * @param request the request
 	 * @return the response entity
 	 */
-	@PatchMapping(value = "patch/",  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObj> patch(@RequestBody RequestObj request) {
+	@PatchMapping(value = "patch/{id}",  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseObj> patch(@PathVariable("id") Long id, @RequestBody RequestObj request) {
 		ResponseObj responseObj = new ResponseObj();
 		HttpStatus httpStatus;
-		if(null != request.getId() || null != request.getName()) {
+		if(null != id || null != request.getName()) {
 			//TODO SERVICE CALL
 			httpStatus = HttpStatus.OK;
 			responseObj.setStatus(RestUtil.SUCCESS);
@@ -105,14 +107,15 @@ public class RestControllerJson {
 	/**
 	 * Put.
 	 *
+	 * @param id the id
 	 * @param request the request
 	 * @return the response entity
 	 */
-	@PutMapping(value = "put/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObj> put(@RequestBody RequestObj request) {
+	@PutMapping(value = "put/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseObj> put(@PathVariable("id") Long id, @RequestBody RequestObj request) {
 		ResponseObj responseObj = new ResponseObj();
 		HttpStatus httpStatus;
-		if(null != request.getId() && null != request.getName() && null != request.getDepartment()) {
+		if(null != id && null != request.getName() && null != request.getDepartment()) {
 			//SERVICE CALL
 			httpStatus = HttpStatus.OK;
 			responseObj.setStatus(RestUtil.SUCCESS);
